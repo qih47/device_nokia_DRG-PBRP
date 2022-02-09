@@ -46,6 +46,7 @@ on fs
 
 on post-fs
     start boot-hal-1-0
+    start boot-hal-1-1
   
     
 
