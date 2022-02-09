@@ -19,3 +19,5 @@
 PRODUCT_MAKEFILES := \
      $(LOCAL_DIR)/omni_DRG.mk
 
+COMMON_LUNCH_CHOICES := \
+    omni_DRG-eng
