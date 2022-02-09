@@ -32,6 +32,7 @@ service patchfakepartitions-service /system/bin/patchfakepartitions-service.sh
 on boot
     start load_ts_firmware
     setprop sys.usb.config adb
+    start health-hal-2-1
 
 on fs
   wait /dev/block/platform/soc/${ro.boot.bootdevice}
