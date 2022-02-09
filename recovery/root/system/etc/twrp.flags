@@ -1,0 +1,43 @@
+# Android fstab file.
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+# mount point    fstype     device                 device2                        flags
+/system		     ext4	           /dev/block/bootdevice/by-name/system		flags=display="System";slotselect
+/vendor			 ext4	           /dev/block/bootdevice/by-name/vendor		flags=display="Vendor";slotselect;wipeingui
+/boot            emmc              /dev/block/bootdevice/by-name/boot       flags=slotselect;backup=1;flashimg=1
+/recovery		 emmc			   /dev/block/bootdevice/by-name/recovery	
+/data            ext4              /dev/block/bootdevice/by-name/userdata   flags=fileencryption=ice:aes-256-cts;wrappedkey
+/abl             emmc              /dev/block/bootdevice/by-name/abl        flags=slotselect;backup=1;flashimg=1
+/bluetooth       emmc              /dev/block/bootdevice/by-name/bluetooth  flags=slotselect;backup=1;flashimg=1
+/cda             emmc              /dev/block/bootdevice/by-name/cda        flags=slotselect;backup=1;flashimg=1
+/cmnlib64        emmc              /dev/block/bootdevice/by-name/cmnlib64   flags=slotselect;backup=1;flashimg=1
+/cmnlib          emmc              /dev/block/bootdevice/by-name/cmnlib     flags=slotselect;backup=1;flashimg=1
+/devcfg          emmc              /dev/block/bootdevice/by-name/devcfg     flags=slotselect;backup=1;flashimg=1
+/dsp             emmc              /dev/block/bootdevice/by-name/dsp        flags=slotselect;backup=1;flashimg=1
+/hidden          emmc              /dev/block/bootdevice/by-name/hidden     flags=slotselect;backup=1;flashimg=1
+/hyp             emmc              /dev/block/bootdevice/by-name/hyp        flags=slotselect;backup=1;flashimg=1
+/firmware	     vfat	           /dev/block/bootdevice/by-name/modem	    flags=slotselect;display="Firmware";mounttodecrypt;fsflags=ro
+/firmware_image  emmc              /dev/block/bootdevice/by-name/modem		flags=display="Firmware_Image";backup=1;flashimg=1
+/keymaster       emmc              /dev/block/bootdevice/by-name/keymaster  flags=slotselect;backup=1;flashimg=1
+/mdtp            emmc              /dev/block/bootdevice/by-name/mdtp       flags=slotselect;backup=1;flashimg=1
+/mdtpsecapp      emmc              /dev/block/bootdevice/by-name/mdtpsecapp flags=slotselect;backup=1;flashimg=1
+/modem           emmc              /dev/block/bootdevice/by-name/modem      flags=slotselect;backup=1;flashimg=1
+/nvdef           emmc              /dev/block/bootdevice/by-name/nvdef      flags=slotselect;backup=1;flashimg=1
+/pmic            emmc              /dev/block/bootdevice/by-name/pmic       flags=slotselect;backup=1;flashimg=1
+/rpm             emmc              /dev/block/bootdevice/by-name/rpm        flags=slotselect;backup=1;flashimg=1
+/splash          emmc              /dev/block/bootdevice/by-name/splash     flags=slotselect;backup=1;flashimg=1
+/systeminfo      emmc              /dev/block/bootdevice/by-name/systeminfo flags=slotselect;backup=1;flashimg=1
+/tz              emmc              /dev/block/bootdevice/by-name/tz         flags=slotselect;backup=1;flashimg=1
+/xbl             emmc              /dev/block/bootdevice/by-name/xbl        flags=slotselect;backup=1;flashimg=1
+/persist         ext4              /dev/block/bootdevice/by-name/persist    flags=display="Persist"
+
+
+# AVB 
+/dtbo							emmc				/dev/block/bootdevice/by-name/dtbo									flags=slotselect;display="DTBO";backup=1;flashimg=1
+/vbmeta	emmc	/dev/block/bootdevice/by-name/vbmeta										flags=display="VBMeta";backup=1;flashimg=1
+/vbmeta_system	emmc	/dev/block/bootdevice/by-name/vbmeta_system			
+						flags=display="VBMeta System";backup=1;flashimg=1
+# Removable storage
+/usb-otg         auto              /dev/block/sda1         /dev/block/sda   flags=removable;storage;display="USB OTG"
+/sdcard1         auto              /dev/block/mmcblk1p1                     flags=display="MicroSD";storage;wipeingui;removable

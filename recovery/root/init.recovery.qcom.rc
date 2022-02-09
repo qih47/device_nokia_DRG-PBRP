@@ -1,0 +1,50 @@
+import /init.recovery.qcom_decrypt.rc
+
+
+on early-init
+    mkdir /firmware 0771 system system
+    mount debugfs debugfs /sys/kernel/debug
+    chmod 0755 /sys/kernel/debug
+    start hwservicemanager
+    start prepdecrypt
+    start gatekeeper-1-0
+    start keymaster-3-0
+    
+service prepdecrypt /system/bin/prepdecrypt.sh
+    disabled
+    user root
+    group root
+    seclabel u:r:recovery:s0
+
+service load_ts_firmware /system/bin/load_ts_firmware.sh
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+
+service patchfakepartitions-service /system/bin/patchfakepartitions-service.sh
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+on boot
+    start load_ts_firmware
+    setprop sys.usb.config adb
+
+on fs
+  wait /dev/block/platform/soc/${ro.boot.bootdevice}
+  symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+  setprop ro.hardware.bootctrl sdm636
+  chmod 0660 /dev/qseecom
+  chown system drmrpc /dev/qseecom
+  chmod 0664 /dev/ion
+  chown system system /dev/ion
+  install_keyring
+
+on post-fs
+    start boot-hal-1-0
+  
+    
+
